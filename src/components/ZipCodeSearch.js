@@ -1,16 +1,20 @@
-import React, {Fragment, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
+import Zip from "./Zip"
 
 const ZipCodeSearch = () => {
     const [zip, setZip] = useState([]);
+    const [filteredData, setFilteredData] = useState(zip);
 
     const getZip = async () => {
         try {
             const response = await fetch("http://ctp-zip-api.herokuapp.com/zip/10016")
             console.log(response)
 
-            const jsonData = response.json()
+            const jsonData = await response.json()
+            console.log(jsonData);
 
             setZip(jsonData)
+            setFilteredData(jsonData);
         } catch (err) {
             console.error(err.message)
         }
@@ -38,6 +42,8 @@ const ZipCodeSearch = () => {
                     value = {zip}
                     onChange = {event => setZip(event.target.value)}></input>
             </form>
+
+            <Zip zip = { zip } />
         </>       
     )
 }
