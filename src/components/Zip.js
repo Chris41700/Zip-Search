@@ -4,8 +4,8 @@ function Zip( { zip }) {
     return (
         <>
             {zip.map(zipCode => {
-                //return (
-                    <div key={zipCode.id}>
+                return (
+                    <div key = {zipCode.RecordNumber}>
                         <h3>{ zipCode.city }</h3>
 
                         <ul>
@@ -15,7 +15,7 @@ function Zip( { zip }) {
                             <li>Total Wages: { zipCode.totalWages }</li>
                         </ul>
                     </div>
-                //)
+                )
             })}
         </>
     )

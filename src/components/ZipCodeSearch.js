@@ -3,18 +3,18 @@ import Zip from "./Zip"
 
 const ZipCodeSearch = () => {
     const [zip, setZip] = useState([]);
-    const [filteredData, setFilteredData] = useState(zip);
+    const [filteredData, setFilteredData] = useState("");
 
     const getZip = async () => {
         try {
-            const response = await fetch("http://ctp-zip-api.herokuapp.com/zip/10016")
+            const response = await fetch(`http://ctp-zip-api.herokuapp.com/zip/${filteredData}`)
             console.log(response)
 
             const jsonData = await response.json()
             console.log(jsonData);
 
             setZip(jsonData)
-            setFilteredData(jsonData);
+            //setFilteredData(jsonData);
         } catch (err) {
             console.error(err.message)
         }
@@ -22,7 +22,7 @@ const ZipCodeSearch = () => {
 
     useEffect(() => {
         getZip();
-    }, [])
+    }, [filteredData])
 
     return (
         <>
@@ -37,13 +37,15 @@ const ZipCodeSearch = () => {
                 <input 
                     type = "text" 
                     className = "form-control"
-                    maxLength = "5"
                     placeholder = "Try 10016"
                     value = {zip}
-                    onChange = {event => setZip(event.target.value)}></input>
+                    onChange = {event => setfilteredData(event.target.value)}>
+                    </input>
             </form>
 
-            <Zip zip = { zip } />
+            <div>
+                <Zip zip = { zip } />
+            </div>
         </>       
     )
 }
