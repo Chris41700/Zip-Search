@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import Zip from "./Zip"
 
 const ZipCodeSearch = () => {
     const [zip, setZip] = useState([]);
@@ -6,7 +7,7 @@ const ZipCodeSearch = () => {
 
     const getZip = async () => {
         try {
-            const response = await fetch(`http://ctp-zip-api.herokuapp.com/zip/${setFilteredData}`)
+            const response = await fetch(`http://ctp-zip-api.herokuapp.com/zip/${filteredData}`)
             console.log(response)
 
             const jsonData = await response.json()
@@ -20,7 +21,7 @@ const ZipCodeSearch = () => {
 
     useEffect(() => {
         getZip();
-    }, [filteredData])
+    }, [filteredData], [])
     
     return (
         <>
@@ -36,27 +37,12 @@ const ZipCodeSearch = () => {
                     type = "text" 
                     className = "form-control"
                     placeholder = "Try 10016"
-                    value = {zip}
+                    value = {filteredData}
                     onChange = {event => setFilteredData(event.target.value)}>
                     </input>
             </form>
 
-            <div>
-                {zip.map((zipCode) => {
-                    return (
-                        <div key = {zipCode.RecordNumber}>
-                            <h3>{ zipCode.city }</h3>
-
-                            <ul>
-                                <li>State: { zipCode.state }</li>
-                                <li>Location: ({ zipCode.lat }, { zipCode.long })</li>
-                                <li>Population (estimated): { zipCode.population }</li>
-                                <li>Total Wages: { zipCode.totalWages }</li>
-                            </ul>
-                        </div>
-                    )
-                })}
-            </div>
+            <Zip zip = { zip } />
         </>       
     )
 }
