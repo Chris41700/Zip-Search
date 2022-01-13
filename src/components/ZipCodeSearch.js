@@ -21,7 +21,7 @@ const ZipCodeSearch = () => {
 
     useEffect(() => {
         getZip();
-    }, [filteredData], [])
+    }, [filteredData])
     
     return (
         <>
@@ -39,7 +39,7 @@ const ZipCodeSearch = () => {
                     placeholder = "Try 10016"
                     value = {filteredData}
                     onChange = {event => setFilteredData(event.target.value)}>
-                    </input>
+                </input>
             </form>
 
             <Zip zip = { zip } />
