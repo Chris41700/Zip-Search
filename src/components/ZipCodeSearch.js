@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Zip from "./Zip"
 
 const ZipCodeSearch = () => {
     const [zip, setZip] = useState([]);
@@ -7,14 +6,13 @@ const ZipCodeSearch = () => {
 
     const getZip = async () => {
         try {
-            const response = await fetch(`http://ctp-zip-api.herokuapp.com/zip/${filteredData}`)
+            const response = await fetch(`http://ctp-zip-api.herokuapp.com/zip/${setFilteredData}`)
             console.log(response)
 
             const jsonData = await response.json()
             console.log(jsonData);
 
             setZip(jsonData)
-            //setFilteredData(jsonData);
         } catch (err) {
             console.error(err.message)
         }
@@ -23,7 +21,7 @@ const ZipCodeSearch = () => {
     useEffect(() => {
         getZip();
     }, [filteredData])
-
+    
     return (
         <>
             <h1 className = "text-center mt-5">
@@ -39,12 +37,25 @@ const ZipCodeSearch = () => {
                     className = "form-control"
                     placeholder = "Try 10016"
                     value = {zip}
-                    onChange = {event => setfilteredData(event.target.value)}>
+                    onChange = {event => setFilteredData(event.target.value)}>
                     </input>
             </form>
 
             <div>
-                <Zip zip = { zip } />
+                {zip.map((zipCode) => {
+                    return (
+                        <div key = {zipCode.RecordNumber}>
+                            <h3>{ zipCode.city }</h3>
+
+                            <ul>
+                                <li>State: { zipCode.state }</li>
+                                <li>Location: ({ zipCode.lat }, { zipCode.long })</li>
+                                <li>Population (estimated): { zipCode.population }</li>
+                                <li>Total Wages: { zipCode.totalWages }</li>
+                            </ul>
+                        </div>
+                    )
+                })}
             </div>
         </>       
     )
