@@ -13,3 +13,4 @@ After, run "npm start" </br>
 - [x] Display cities details: state, location, estimated population, and total wages
 
 ## Project Running
+![2022-10-07-03-43-06](https://user-images.githubusercontent.com/60550186/194500424-5451a542-3f4a-4c6f-971e-aa03cd9d4b91.gif)
